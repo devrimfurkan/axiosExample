@@ -10,8 +10,15 @@ function App(){
     axios
       .get(`${baseURL}`)
       .then(function (response) {
+        if (response.data[0]) {
+          setList(response.data[0]);
+        } else {
+          console.log("HATA!!!!");
+        }
         console.log(response.data[0]);
-        setList( response.data);
+        console.log(response.data[1]);
+        setList(response.data[1]);
+        setList(response.data[0]);
       })
       .catch(function (error) {
         console.log(`${error} Bir Hata Oluştu`);
