@@ -1,15 +1,26 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import Card from './Components/Card';
-import data from './data';
+import axios from 'axios';
 
-function App(){
-  const [list, setlist] = useState(data);
-  const renderCard = ({item}) => <Card atr= {item}/>;
+function App(){  
+    const [list, setList] = useState("");
+    const baseURL = 'https://jsonplaceholder.typicode.com/photos';
+    const renderCard = ({item}) =>( <Card atr={item} />); 
+    axios
+      .get(`${baseURL}`)
+      .then(function (response) {
+        console.log(response.data[0]);
+        setList( response.data);
+      })
+      .catch(function (error) {
+        console.log(`${error} Bir Hata Oluştu`);
+      });
+
   return(
     <View style={styles.sacffold}>
       <FlatList
-        keyExtractor = {item => item._id}
+        keyExtractor = {item => item.id}
         data={list}
         renderItem={renderCard}
       />
