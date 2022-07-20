@@ -1,40 +1,37 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, Button } from 'react-native';
 import Card from './Components/Card';
 import axios from 'axios';
-function App() {
+
+function HomeScreen  ({navigation}) {
   const [list, setList] = useState('');
   const baseURL = 'https://jsonplaceholder.typicode.com/photos';
-  const renderCard = ({item}) => <Card atr={item} />;
+  const renderCard = ({item}) => (
+    <Card atr={item} onPress={() => navigation.navigate('Detail')} />
+  );
   axios
     .get(`${baseURL}`)
     .then(function (response) {
-      if (response.data[0]) {
-        setList(response.data[0]);
-      } else {
-        console.log('HATA!!!!');
-      }
       console.log(response.data[0]);
-      console.log(response.data[1]);
-      setList(response.data[1]);
-      setList(response.data[0]);
+      setList(response.data);
     })
     .catch(function (error) {
       console.log(`${error} Bir Hata Oluştu`);
     });
 
+
   return (
     <View style={styles.sacffold}>
-      <FlatList 
+      {/* <Button title="tıkla" onPress={()=>navigation.navigate("Detail")} /> */}
+      <FlatList
         keyExtractor={item => item.id}
-        data= {list}
+        data={list}
         renderItem={renderCard}
       />
     </View>
   );
-};
+}
 
-export default App;
 
 const styles = StyleSheet.create({
   sacffold: {
@@ -42,3 +39,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#A6D1E6',
   },
 });
+
+export default HomeScreen;
