@@ -1,38 +1,19 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
-import Card from './Components/Card';
-import axios from 'axios';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import HomeScreen from './HomeScreen';
+import DetailScreen from './DetailScreen';
+const Stack = createNativeStackNavigator();
 
-function App(){  
-    const [list, setList] = useState("");
-    const baseURL = 'https://jsonplaceholder.typicode.com/photos';
-    const renderCard = ({item}) =>( <Card atr={item} />); 
-    axios
-      .get(`${baseURL}`)
-      .then(function (response) {
-        console.log(response.data[0]);
-        setList( response.data);
-      })
-      .catch(function (error) {
-        console.log(`${error} Bir Hata Oluştu`);
-      });
-
-  return(
-    <View style={styles.sacffold}>
-      <FlatList
-        keyExtractor = {item => item.id}
-        data={list}
-        renderItem={renderCard}
-      />
-    </View>
+function App  ()  {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Detail" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 export default App;
-
-const styles = StyleSheet.create({
-  sacffold: {
-    flex: 1,
-    backgroundColor: '#A6D1E6',
-  },
-});
