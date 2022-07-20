@@ -5,16 +5,15 @@ import styles from './Card.styles';
 const Card = (props, {onPress}) =>{
     
     return (
-      
-      <View style={styles.container}>
         <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
         <Image style={styles.leading} source={{uri: props.atr.url}} />
-      </TouchableOpacity>
         <View style={styles.column}>
           <Text style={styles.title}>{props.atr.title}</Text>
         </View>
         <Image style={styles.trailing} source={{uri: props.atr.thumbnailUrl}} />
       </View>
+      </TouchableOpacity>
     );
 };
 
