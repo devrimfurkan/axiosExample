@@ -2,33 +2,32 @@ import React, {useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import Card from './Components/Card';
 import axios from 'axios';
-
-function App(){  
-    const [list, setList] = useState("");
-    const baseURL = 'https://jsonplaceholder.typicode.com/photos';
-    const renderCard = ({item}) =>( <Card atr={item} />); 
-    axios
-      .get(`${baseURL}`)
-      .then(function (response) {
-        if (response.data[0]) {
-          setList(response.data[0]);
-        } else {
-          console.log("HATA!!!!");
-        }
-        console.log(response.data[0]);
-        console.log(response.data[1]);
-        setList(response.data[1]);
+function App() {
+  const [list, setList] = useState('');
+  const baseURL = 'https://jsonplaceholder.typicode.com/photos';
+  const renderCard = ({item}) => <Card atr={item} />;
+  axios
+    .get(`${baseURL}`)
+    .then(function (response) {
+      if (response.data[0]) {
         setList(response.data[0]);
-      })
-      .catch(function (error) {
-        console.log(`${error} Bir Hata Oluştu`);
-      });
+      } else {
+        console.log('HATA!!!!');
+      }
+      console.log(response.data[0]);
+      console.log(response.data[1]);
+      setList(response.data[1]);
+      setList(response.data[0]);
+    })
+    .catch(function (error) {
+      console.log(`${error} Bir Hata Oluştu`);
+    });
 
-  return(
+  return (
     <View style={styles.sacffold}>
-      <FlatList
-        keyExtractor = {item => item.id}
-        data={list}
+      <FlatList 
+        keyExtractor={item => item.id}
+        data= {list}
         renderItem={renderCard}
       />
     </View>
